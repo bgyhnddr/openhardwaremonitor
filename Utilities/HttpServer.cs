@@ -78,9 +78,11 @@ namespace OpenHardwareMonitor.Utilities {
         return false;
 
       try {
-        listenerThread.Abort();
-        listener.Stop();
-        listenerThread = null;
+        if (listenerThread != null) {
+          listenerThread.Abort();
+          listener.Stop();
+          listenerThread = null;
+        }
       } catch (HttpListenerException) {
       } catch (ThreadAbortException) {
       } catch (NullReferenceException) {
@@ -106,7 +108,7 @@ namespace OpenHardwareMonitor.Utilities {
       // Call EndGetContext to complete the asynchronous operation.
       HttpListenerContext context;
       try {
-        context = listener.EndGetContext(result);     
+        context = listener.EndGetContext(result);
       } catch (Exception) {
         return;
       }
@@ -120,7 +122,7 @@ namespace OpenHardwareMonitor.Utilities {
       }
 
       if (requestedFile.Contains("images_icon")) {
-        ServeResourceImage(context.Response, 
+        ServeResourceImage(context.Response,
           requestedFile.Replace("images_icon/", ""));
         return;
       }
@@ -131,15 +133,14 @@ namespace OpenHardwareMonitor.Utilities {
 
       string[] splits = requestedFile.Split('.');
       string ext = splits[splits.Length - 1];
-      ServeResourceFile(context.Response, 
+      ServeResourceFile(context.Response,
         "Web." + requestedFile.Replace('/', '.'), ext);
     }
 
-    private void ServeResourceFile(HttpListenerResponse response, string name, 
-      string ext) 
-    {
+    private void ServeResourceFile(HttpListenerResponse response, string name,
+      string ext) {
       // resource names do not support the hyphen
-      name = "OpenHardwareMonitor.Resources." + 
+      name = "OpenHardwareMonitor.Resources." +
         name.Replace("custom-theme", "custom_theme");
 
       string[] names =
@@ -158,13 +159,13 @@ namespace OpenHardwareMonitor.Utilities {
                 output.Write(buffer, 0, len);
               }
               output.Flush();
-              output.Close();              
+              output.Close();
               response.Close();
-            } catch (HttpListenerException) { 
-            } catch (InvalidOperationException) { 
+            } catch (HttpListenerException) {
+            } catch (InvalidOperationException) {
             }
             return;
-          }          
+          }
         }
       }
 
@@ -191,7 +192,7 @@ namespace OpenHardwareMonitor.Utilities {
                 ms.WriteTo(output);
               }
               output.Close();
-            } catch (HttpListenerException) {              
+            } catch (HttpListenerException) {
             }
             image.Dispose();
             response.Close();
@@ -235,7 +236,7 @@ namespace OpenHardwareMonitor.Utilities {
     }
 
     private string GenerateJSON(Node n) {
-      string JSON = "{\"id\": " + nodeCount + ", \"Text\": \"" + n.Text 
+      string JSON = "{\"id\": " + nodeCount + ", \"Text\": \"" + n.Text
         + "\", \"Children\": [";
       nodeCount++;
 
@@ -254,13 +255,13 @@ namespace OpenHardwareMonitor.Utilities {
         JSON += ", \"Min\": \"\"";
         JSON += ", \"Value\": \"\"";
         JSON += ", \"Max\": \"\"";
-        JSON += ", \"ImageURL\": \"images_icon/" + 
+        JSON += ", \"ImageURL\": \"images_icon/" +
           GetHardwareImageFile((HardwareNode)n) + "\"";
       } else if (n is TypeNode) {
         JSON += ", \"Min\": \"\"";
         JSON += ", \"Value\": \"\"";
         JSON += ", \"Max\": \"\"";
-        JSON += ", \"ImageURL\": \"images_icon/" + 
+        JSON += ", \"ImageURL\": \"images_icon/" +
           GetTypeImageFile((TypeNode)n) + "\"";
       } else {
         JSON += ", \"Min\": \"\"";
@@ -273,9 +274,8 @@ namespace OpenHardwareMonitor.Utilities {
       return JSON;
     }
 
-    private static void ReturnFile(HttpListenerContext context, string filePath) 
-    {
-      context.Response.ContentType = 
+    private static void ReturnFile(HttpListenerContext context, string filePath) {
+      context.Response.ContentType =
         GetcontentType(Path.GetExtension(filePath));
       const int bufferSize = 1024 * 512; //512KB
       var buffer = new byte[bufferSize];

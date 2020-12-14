@@ -93,7 +93,6 @@ namespace OpenHardwareMonitor.GUI {
       this.aboutMenuItem = new System.Windows.Forms.MenuItem();
       this.treeContextMenu = new System.Windows.Forms.ContextMenu();
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-      this.timer = new System.Windows.Forms.Timer(this.components);
       this.splitContainer = new OpenHardwareMonitor.GUI.SplitContainerAdv();
       this.treeView = new Aga.Controls.Tree.TreeViewAdv();
       this.logSeparatorMenuItem = new System.Windows.Forms.MenuItem();
@@ -119,26 +118,26 @@ namespace OpenHardwareMonitor.GUI {
       // 
       this.sensor.Header = "Sensor";
       this.sensor.SortOrder = System.Windows.Forms.SortOrder.None;
-      this.sensor.TooltipText = null;      
+      this.sensor.TooltipText = null;
       // 
       // value
       // 
       this.value.Header = "Value";
       this.value.SortOrder = System.Windows.Forms.SortOrder.None;
-      this.value.TooltipText = null;      
+      this.value.TooltipText = null;
       // 
       // min
       // 
       this.min.Header = "Min";
       this.min.SortOrder = System.Windows.Forms.SortOrder.None;
-      this.min.TooltipText = null;      
+      this.min.TooltipText = null;
       // 
       // max
       // 
       this.max.Header = "Max";
       this.max.SortOrder = System.Windows.Forms.SortOrder.None;
       this.max.TooltipText = null;
-      
+
       // 
       // nodeImage
       // 
@@ -498,11 +497,6 @@ namespace OpenHardwareMonitor.GUI {
       this.saveFileDialog.RestoreDirectory = true;
       this.saveFileDialog.Title = "Save Report As";
       // 
-      // timer
-      // 
-      this.timer.Interval = 1000;
-      this.timer.Tick += new System.EventHandler(this.timer_Tick);
-      // 
       // splitContainer
       // 
       this.splitContainer.Border3DStyle = System.Windows.Forms.Border3DStyle.Raised;
@@ -711,7 +705,6 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.MenuItem startMinMenuItem;
     private System.Windows.Forms.MenuItem startupMenuItem;
     private System.Windows.Forms.SaveFileDialog saveFileDialog;
-    private System.Windows.Forms.Timer timer;
     private System.Windows.Forms.MenuItem hiddenMenuItem;
     private System.Windows.Forms.MenuItem MenuItem1;
     private System.Windows.Forms.MenuItem columnsMenuItem;
@@ -734,7 +727,7 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.MenuItem plotWindowMenuItem;
     private System.Windows.Forms.MenuItem plotBottomMenuItem;
     private System.Windows.Forms.MenuItem plotRightMenuItem;
-		private System.Windows.Forms.MenuItem webMenuItem;
+    private System.Windows.Forms.MenuItem webMenuItem;
     private System.Windows.Forms.MenuItem runWebServerMenuItem;
     private System.Windows.Forms.MenuItem serverPortMenuItem;
     private System.Windows.Forms.MenuItem menuItem5;
